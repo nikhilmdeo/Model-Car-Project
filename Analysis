@@ -1,0 +1,56 @@
+USE mintclassics;
+SELECT DISTINCT 
+productName,
+productCode,
+productLine, 
+quantityInStock,
+warehouseCode,
+buyPrice,
+MSRP
+FROM products 
+ORDER BY warehouseCode;
+/* 
+Executed query to determine which distinct products are being held 
+as inventory in which warehouses
+
+Warehouse A --> Motorcycles/Planes (72% capacity)
+Warehouse B --> Classic Cars (67% capacity)
+Warehouse C --> Vintage Cars (50% capacity)
+Warehouse D --> Trucks and Buses/Ships/Trains (75% capacity)
+*/
+
+SELECT DISTINCT 
+orders.orderDate,
+orderdetails.quantityOrdered,
+orderdetails.priceEach,
+orderdetails.priceEach * orderdetails.quantityOrdered AS costToBuyer,
+products.productLine,
+products.buyPrice,
+products.MSRP
+FROM orders
+JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber
+JOIN products ON orderdetails.productCode = products.productCode
+order by costToBuyer DESC;
+
+/* Executed this query to inspect which productLines are proving
+to be most profitable for the company by order $ amount. */
+
+SELECT productLine,
+SUM(quantityInStock) AS inventoryByItemType
+FROM products
+GROUP BY productLine;
+
+/* Executed SUM statement to grab an overview of inventory counts
+of each productLine in warehouse. */
+
+SELECT DISTINCT payments.checkNumber,
+payments.paymentDate,
+payments.amount,
+customers.customerName
+FROM payments
+JOIN customers ON payments.customerNumber = customers.customerNumber
+JOIN orders ON customers.customerNumber = orders.customerNumber;
+
+/* With this query we are able to understand who are the customers that are
+spending the most money with us by joining payment table to customers. */
+
