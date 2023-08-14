@@ -41,16 +41,33 @@ FROM products
 GROUP BY productLine;
 
 /* Executed SUM statement to grab an overview of inventory counts
-of each productLine in warehouse. */
+of each productLine in warehouse to influence decisions about
+re-stocking between facilities. */
 
-SELECT DISTINCT payments.checkNumber,
-payments.paymentDate,
-payments.amount,
+SELECT DISTINCT
+SUM(payments.amount),
 customers.customerName
 FROM payments
 JOIN customers ON payments.customerNumber = customers.customerNumber
-JOIN orders ON customers.customerNumber = orders.customerNumber;
+JOIN orders ON customers.customerNumber = orders.customerNumber
+GROUP BY customers.customerName;
 
-/* With this query we are able to understand who are the customers that are
-spending the most money with us by joining payment table to customers. */
+/* This is an aggregated function to view the total
+revenue that was driven by each customer in the database by 
+combining the sum of payments by customer. */
+
+
+SELECT DISTINCT 
+orderdetails.productCode, 
+SUM(orderdetails.quantityOrdered) AS totalQuantityOrdered, 
+SUM(orderdetails.priceEach) AS totalOrderCost,
+products.productName,
+products.productLine
+FROM orderdetails
+JOIN products on orderdetails.productCode = products.productCode
+GROUP BY products.productCode
+
+/* This statement shows us the $ amount ordered of each product
+featured in the companys inventory which is a great insight into
+which items are popular vs. others. */
 
