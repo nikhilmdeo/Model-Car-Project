@@ -10,7 +10,7 @@ MSRP
 FROM products 
 ORDER BY warehouseCode;
 /* 
-Executed query to determine which distinct products are being held 
+Executed query to determine which distinct productsName/productLine are being held 
 as inventory in which warehouses
 
 Warehouse A --> Motorcycles/Planes (72% capacity)
@@ -33,7 +33,7 @@ JOIN products ON orderdetails.productCode = products.productCode
 order by costToBuyer DESC;
 
 /* Executed this query to inspect which productLines are proving
-to be most profitable for the company by order $ amount. */
+to be most profitable for the company by the $ amount ordered over time. */
 
 SELECT productLine,
 SUM(quantityInStock) AS inventoryByItemType
@@ -53,8 +53,9 @@ JOIN orders ON customers.customerNumber = orders.customerNumber
 GROUP BY customers.customerName;
 
 /* This is an aggregated function to view the total
-revenue that was driven by each customer in the database by 
-combining the sum of payments by customer. */
+revenue that was driven in by each customer in the database by 
+combining the sum of payments by customer. This can give us a good idea
+of who is spending with us and what products they like.*/
 
 
 SELECT DISTINCT 
@@ -69,5 +70,5 @@ GROUP BY products.productCode
 
 /* This statement shows us the $ amount ordered of each product
 featured in the companys inventory which is a great insight into
-which items are popular vs. others. */
+which items in certain productLines are more popular vs. others. */
 
