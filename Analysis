@@ -45,7 +45,7 @@ of each productLine in warehouse to influence decisions about
 re-stocking between facilities. */
 
 SELECT DISTINCT
-SUM(payments.amount),
+SUM(payments.amount) as totalSpent,
 customers.customerName
 FROM payments
 JOIN customers ON payments.customerNumber = customers.customerNumber
