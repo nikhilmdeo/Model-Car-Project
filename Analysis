@@ -72,3 +72,31 @@ GROUP BY products.productCode
 featured in the companys inventory which is a great insight into
 which items in certain productLines are more popular vs. others. */
 
+
+create view 
+employee_accounts
+as
+SELECT
+customerNumber,
+customerName,
+creditLimit,
+salesRepEmployeeNumber,
+firstName,
+lastName
+FROM customers
+LEFT JOIN employees ON customers.salesRepEmployeeNumber = employees.employeeNumber
+WHERE salesRepEmployeeNumber is not null;
+
+select
+firstName,
+lastName,
+SUM(creditLimit) as creditManaged
+from employee_accounts
+GROUP BY firstName, lastName
+
+
+/* Used a JOIN and then turned my query to a view to conduct further analysis.
+This query+view shows a report of who within the company is managing the
+largest buyers/customers and who overall is managing the most potential
+revenue by credit limit of all their clients combined.*/
+
