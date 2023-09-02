@@ -1,3 +1,9 @@
+Used queries involving concepts such as SUM, COUNT, AVG, JOINS, VIEWS, 
+
+
+
+
+
 USE mintclassics;
 SELECT DISTINCT 
 productName,
