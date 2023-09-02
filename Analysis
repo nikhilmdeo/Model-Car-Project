@@ -129,3 +129,26 @@ ORDER BY num_of_sales DESC;
 certain items ordered grouped by number of sales of
 each product Line. */
 by productLine
+
+create view inventory
+as
+SELECT
+SUM(quantityOrdered) as quantityOfProductOrdered,
+quantityInStock,
+productLine,
+productName
+FROM products
+JOIN orderdetails ON products.productCode = orderdetails.productCode
+GROUP BY quantityInStock, productLine, productName;
+
+SELECT 
+SUM(quantityOfProductOrdered),
+SUM(quantityInStock),
+productLine
+FROM inventory
+GROUP BY productLine;
+
+/* This query is centered around inventory counts of al products and product lines.
+The first query which the view is made of shows which items the company may be overstocking/understocking on based
+on discrepancies between amount ordered and amount in stock. The query made using the view shows the same
+data but only based on product lines.*/
