@@ -100,3 +100,26 @@ This query+view shows a report of who within the company is managing the
 largest buyers/customers and who overall is managing the most potential
 revenue by credit limit of all their clients combined.*/
 
+SELECT DISTINCT 
+customerNumber,
+AVG(amount) as averageOrderAmount,
+ROUND(avg(amount),2) as averageOrderAmount
+FROM payments
+GROUP BY customerNumber
+;
+
+/* Used this query to determine the average order cost made by 
+each distinct customer across time. */
+
+SELECT products.productLine,
+       COUNT(orderdetails.productCode) AS num_of_sales
+FROM products 
+JOIN orderdetails 
+ON products.productCode = orderdetails.productCode
+GROUP BY products.productLine
+ORDER BY num_of_sales DESC;
+
+/* This query offers insights into the popularity of
+certain items ordered grouped by number of sales of
+each product Line. */
+by productLine
