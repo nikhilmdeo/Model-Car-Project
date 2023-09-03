@@ -41,14 +41,6 @@ order by costToBuyer DESC;
 /* Executed this query to inspect which productLines are proving
 to be most profitable for the company by the $ amount ordered over time. */
 
-SELECT productLine,
-SUM(quantityInStock) AS inventoryByItemType
-FROM products
-GROUP BY productLine;
-
-/* Executed SUM statement to grab an overview of inventory counts
-of each productLine in warehouse to influence decisions about
-re-stocking between facilities. */
 
 SELECT DISTINCT
 SUM(payments.amount) as totalSpent,
@@ -127,7 +119,7 @@ ORDER BY num_of_sales DESC;
 
 /* This query offers insights into the popularity of
 certain items ordered grouped by number of sales of
-each product Line. */
+each product Line rather than $ amount. */
 by productLine
 
 create view inventory
