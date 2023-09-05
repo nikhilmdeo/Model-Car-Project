@@ -1,4 +1,4 @@
-Used queries involving concepts such as SUM, COUNT, AVG, JOINS, VIEWS, 
+Used queries involving concepts such as SUM, COUNT, AVG, JOINS, VIEWS, CASE WHEN
 
 
 
@@ -144,3 +144,20 @@ GROUP BY productLine;
 The first query which the view is made of shows which items the company may be overstocking/understocking on based
 on discrepancies between amount ordered and amount in stock. The query made using the view shows the same
 data but only based on product lines.*/
+
+SELECT
+SUM(quantityOrdered) as quantityOfProductOrdered,
+quantityInStock,
+productLine,
+productName,
+CASE
+    WHEN SUM(quantityOrdered) > quantityInStock THEN 'deficit'
+    WHEN SUM(quantityOrdered) < quantityInStock THEN 'surplus'
+END AS productStatus
+FROM products
+JOIN orderdetails ON products.productCode = orderdetails.productCode
+GROUP BY quantityInStock, productLine, productName;
+
+/* To offer a quick insight on the inventory of items, I executed a CASE WHEN statement 
+to identify items we were running out of and which items we may be ordering way too
+much of using the labels surplus/deficit as a separate column for easy identification. */
